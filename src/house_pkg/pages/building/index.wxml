@@ -1,8 +1,13 @@
 <view class="building">
   <van-cell-group border="{{false}}">
-    <van-cell title="北京西三旗花园1号楼" link-type="navigateTo" url="/house_pkg/pages/room/index" is-link />
-    <van-cell title="北京西三旗花园2号楼" link-type="navigateTo" url="/house_pkg/pages/room/index" is-link />
-    <van-cell title="北京西三旗花园3号楼" link-type="navigateTo" url="/house_pkg/pages/room/index" is-link />
-    <van-cell title="北京西三旗花园4号楼" link-type="navigateTo" url="/house_pkg/pages/room/index" is-link />
+    <!-- 数组中是简单类型，key固定给*this -->
+    <van-cell
+      wx:for="{{counts}}"
+      wx:key="*this"
+      title="{{point+(index+1)+'号楼'}}"
+      link-type="navigateTo"
+      url="/house_pkg/pages/room/index?point={{point}}&building={{(index+1)+'号楼'}}"
+      is-link
+    />
   </van-cell-group>
 </view>
