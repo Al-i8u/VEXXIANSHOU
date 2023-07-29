@@ -18,8 +18,7 @@
     "borderStyle": "white",
     "color": "#8e8e92",
     "selectedColor": "#5591af",
-    "list": [
-      {
+    "list": [{
         "text": "首页",
         "pagePath": "pages/index/index",
         "iconPath": "static/tabs/home_default.png",
@@ -53,8 +52,7 @@
     "van-action-sheet": "@vant/weapp/action-sheet/index",
     "van-count-down": "@vant/weapp/count-down/index"
   },
-  "subPackages": [
-    {
+  "subPackages": [{
       "root": "house_pkg",
       "pages": [
         "pages/list/index",
@@ -91,5 +89,6 @@
       "desc": "你的位置将用于小程序位置接口的效果展示"
     }
   },
+
   "sitemapLocation": "sitemap.json"
 }

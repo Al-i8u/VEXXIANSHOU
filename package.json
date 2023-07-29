@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@vant/weapp": "^1.10.4",
+    "dayjs": "^1.11.9",
     "wechat-http": "^0.0.5"
   }
 }

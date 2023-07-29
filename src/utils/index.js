@@ -6,6 +6,7 @@
  * 好处：
  * 集中管理和维护
  */
+import dayjs from 'dayjs'
 
 const utils = {
   // 封装工具函数的地儿
@@ -24,7 +25,16 @@ const utils = {
       mask: true
     });
 
-  }
+  },
+  /**
+   * 
+   * @param {*} date 格式化时间
+   * @param {*} type 格式化类型
+   * @returns 
+   */
+  formatTime (date, type = 'YYYY-MM-DD') {
+    return dayjs(date).format(type)
+  },
 }
 
 //  1. wx是一个全局对象,可以向这个对象里边追加属性存值

@@ -15,13 +15,34 @@ Page({
     // 身份证正反照片
     // idcardFrontUrl: '/static/images/avatar_1.jpg',
     idcardFrontUrl: '',
-
     idcardBackUrl: '',
   },
-  onLoad ({ point, building, room }) {
-    this.setData({
-      point, building, room
-    })
+  onLoad ({ point, building, room, id }) {
+    if (id) {
+      // 1. 有 id，form 页面作为修改房屋的页面
+      // 修改页面的 title
+      wx.setNavigationBarTitle({
+        title: '修改房屋信息'
+      })
+      // 数据回填
+      this.getHouseDetail(id)
+    } else {
+      // 2. 没有 id， form 页面作为新增房屋的页面
+      this.setData({
+        point, building, room
+      })
+    }
+
+  },
+  // 获取修改的房屋数据
+  async getHouseDetail (id) {
+    // 请求数据接口
+    const { data } = await wx.http.get('/room/' + id)
+    console.log('房屋详情：', data)
+    // 渲染数据
+    // 说明：...data 是 ES6 的对象展开语法，相当于 this.setData({ ...data })把对象中所有属性都展开放到
+    // data 中
+    this.setData({ ...data })
   },
   // 上传身份证正反面
   async uploadImg (e) {
@@ -77,12 +98,18 @@ Page({
      * 2. 校验通过
      * 3. 通过后调用后台 api 新增
      */
-    const { point, building, room, gender, name, mobile, idcardFrontUrl, idcardBackUrl } = this.data
+    const { id, point, building, room, gender, name, mobile, idcardFrontUrl, idcardBackUrl } = this.data
     if (!/^[\u4e00-\u9fa5]{2,5}$/.test(name)) return wx.utils.toast('姓名格式错误！')
     if (!/^[1][3-8][0-9]{9}$/.test(mobile)) return wx.utils.toast('手机号格式错误！')
     if (!idcardFrontUrl || !idcardBackUrl) return wx.utils.toast('请上传完整的身份信息！')
     console.log('校验通过')
-    await wx.http.post('/room', { point, building, room, gender, name, mobile, idcardFrontUrl, idcardBackUrl })
+    // 处理 data 参数
+    const data = { point, building, room, gender, name, mobile, idcardFrontUrl, idcardBackUrl }
+    if (id) {
+      // 存在，说明是修改房屋，data 中需要添加 id
+      data.id = id
+    }
+    await wx.http.post('/room', data)
     // 新增成功后跳转房屋列表页面=》 reLaunch跳转会关闭所有页面，打开到应用内的某个页面
     wx.reLaunch({
       url: '/house_pkg/pages/list/index',
